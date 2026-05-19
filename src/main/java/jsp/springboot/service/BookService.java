@@ -221,4 +221,17 @@ public class BookService {
     		throw new NoRecordAvailable("Record Not Available");
     	}
     }
+    //Pagination with Sorting
+    public ResponseStructure<Page<Book>> getBookByPaginationWithSorting(int pageNumber,int pageSize,String FieldName){
+		Page<Book> pages=bookRepository.findAll(PageRequest.of(pageNumber, pageSize).withSort(Sort.by(FieldName).ascending()));
+		if(!pages.isEmpty()) {
+			ResponseStructure<Page<Book>> res=new ResponseStructure<Page<Book>>();
+			res.setData(pages);
+			res.setMessage("Data Fetched");
+			res.setStatusCode(HttpStatus.OK.value());
+			return res;
+		}else {
+			throw new NoRecordAvailable("Record Not Available");
+		}
+	}
 }

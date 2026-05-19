@@ -111,4 +111,16 @@ public class BookController {
     public ResponseEntity<ResponseStructure<List<Book>>> getBookBySort(@PathVariable String fieldName){
     	return new ResponseEntity<ResponseStructure<List<Book>>>(bookService.getBookBySorting(fieldName),HttpStatus.OK);
     }
+   //pagination with sorting
+	@GetMapping("/page/{pageNumber}/{pageSize}/sort/{fieldName}")
+	public ResponseEntity<ResponseStructure<Page<Book>>> getBookByPaginationWithSorting(
+			@PathVariable Integer pageNumber,
+			@PathVariable Integer pageSize,
+			@PathVariable String fieldName) {
+
+		return new ResponseEntity<>(
+				bookService.getBookByPaginationWithSorting(pageNumber, pageSize, fieldName),
+				HttpStatus.OK
+		);
+	}
 }
